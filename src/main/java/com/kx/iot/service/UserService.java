@@ -55,6 +55,17 @@ public class UserService {
         return buildPageWrapper(userDTOList, pageInfo);
     }
 
+    public UserDTO findById(Long userId) {
+        if (userId == null) {
+            return null;
+        }
+        UserEntity userEntity = userMapper.selectByPrimaryKey(userId);
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userEntity, userDTO);
+        userDTO.setIdStr(userEntity.getId().toString());
+        return userDTO;
+    }
+
 
     private void validate(UserDTO userDTO) {
         if (StringUtils.isEmpty(userDTO.getUserName())) {
